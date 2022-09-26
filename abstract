@@ -1,0 +1,65 @@
+cuentaPremium cuentaP = new cuentaPremium();
+//Console.WriteLine("Ingrese cantidad a depositar ");
+/*try{
+    Console.WriteLine("Ingrese cantidad a depositar ");
+    double cant=0;
+    cant= Convert.ToDouble(Console.ReadLine());
+}catch(Exception E){
+    Console.WriteLine("Ingrese un numero");
+}*/
+
+
+//cuentaP.depositar(Console.ReadLine(););
+
+
+
+ //clases
+ 
+ abstract class CuentaBancaria{
+
+    protected double saldo;
+    public void extraer( double cantidad)
+    {
+        if(cantidad>0 && cantidad<=this.saldo){
+            this.saldo-=cantidad;
+        }
+        Console.WriteLine("Extraccion realizada");
+    }
+
+    public void depositar(double cantidad)
+    {
+        this.saldo+=cantidad;
+        Console.WriteLine("Deposito realizado \n");
+    }
+
+    public abstract void interes();
+
+    public void mostrarSaldo(){
+        Console.WriteLine("Saldo= "+ this.saldo);
+    }
+}
+
+    class cuentaPremium : CuentaBancaria
+    {
+      
+      public void ingreso{
+      Console.WriteLine("Ingrese cantidad a depositar");
+      this.saldo=Convert.ToDouble(Console.ReadLine());
+      }
+        public override void interes()
+        {
+            this.saldo+= (this.saldo*10)/100;
+            Console.WriteLine("Saldo= "+ this.saldo);
+        }
+    }
+
+    class cuentaNormal : CuentaBancaria
+    {
+    
+       public override void interes()
+        {
+            this.saldo+= (this.saldo*1)/100;
+            Console.WriteLine("Saldo= "+ this.saldo);
+        }
+            
+    }
