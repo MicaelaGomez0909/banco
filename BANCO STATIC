@@ -1,0 +1,130 @@
+cuentaNormal cuentaN = new cuentaNormal();
+cuentaNormal cuentaNO = new cuentaNormal();
+cuentaPremium cuentaP = new cuentaPremium();
+cuentaPremium cuentaPR = new cuentaPremium();
+
+cuentaP.depositar(2000);
+cuentaP.interes();
+cuentaP.mostrarSaldo();
+
+cuentaN.depositar(200);
+cuentaN.interes();
+cuentaN.mostrarSaldo();
+CuentaBancaria.transferir(cuentaP, cuentaN);
+cuentaN.mostrarSaldo();
+cuentaN.verID();
+cuentaNO.verID();
+cuentaP.verID();
+cuentaPR.verID();
+Console.WriteLine(cuentaN.ToString());
+Console.WriteLine(cuentaNO.ToString());
+Console.WriteLine(cuentaP.ToString());
+Console.WriteLine(cuentaP.Equals(cuentaP));
+
+
+//clases
+
+abstract class CuentaBancaria
+{
+
+    protected double saldo;
+    static int id = 0;
+    protected int cuentaID=0;
+   
+    public int generarID()
+    {
+        return ++id;
+    }
+    public void extraer(double cantidad)
+    {
+        if (cantidad > 0 && cantidad <= this.saldo)
+        {
+            this.saldo -= cantidad;
+            Console.WriteLine("Extraccion realizada");
+        }else { Console.WriteLine("Valor incorrecto"); }
+        
+    }
+
+    public void depositar(double cantidad)
+    {
+        if (cantidad > 0 )
+        {
+            this.saldo += cantidad;
+            Console.WriteLine("Deposito realizado \n");
+        }
+        else { Console.WriteLine("Ingese numero positivo \n"); }
+
+        }
+
+
+    public abstract void interes();
+
+    public void mostrarSaldo()
+    {
+        Console.WriteLine("Su saldo es = {0:C2} " , this.saldo);
+    }
+
+    public static void transferir(CuentaBancaria emisor, CuentaBancaria receptor)
+    {
+        emisor.extraer(1000);
+        receptor.depositar(1000);
+        Console.WriteLine("Transferencia realizada \n");
+    }
+
+    public override string ToString()
+    {
+       return base.ToString()+ "\n ID=" + cuentaID.ToString() + "\n SALDO= " + saldo.ToString();
+    }
+
+    public override bool Equals(object? obj)
+    {
+       if((obj == null) || !this.GetType().Equals(obj.GetType())){
+            return false;
+        }else
+        {
+            CuentaBancaria obj2 = (CuentaBancaria)obj;
+            return this.cuentaID == obj2.cuentaID;
+        }
+               
+    }
+}
+
+
+class cuentaPremium : CuentaBancaria
+{
+
+    public cuentaPremium()
+    {
+        this.cuentaID = generarID();
+    }
+    public override void interes()
+    {
+       this.saldo += (this.saldo * 10.0) / 100;
+       Console.WriteLine("Saldo= " + this.saldo);
+    }
+
+    public void verID()
+    {
+        Console.WriteLine("Numero de ID = "+this.cuentaID);
+    }
+
+}
+
+    class cuentaNormal : CuentaBancaria
+{
+    public cuentaNormal()
+    {
+        this.cuentaID = generarID();
+    }
+    public override void interes()
+    {
+        this.saldo += (this.saldo * 1.0) / 100;
+        Console.WriteLine("Saldo= " + this.saldo);
+    }
+
+    public void verID()
+    {
+        Console.WriteLine("Numero de ID= "+this.cuentaID);
+    }
+
+}
